@@ -1,13 +1,13 @@
 import string
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
-
+from flask import Flask, jsonify, request,render_template,url_for
 from productos import productos
+app = Flask(__name__,template_folder='Template')
+#from jinja2 import Markup
+
 
 @app.route('/')
 def hola():
-    return "grupo 3"
+    return render_template("Productos.html")
 
 @app.route('/lista')
 def lista():
@@ -63,4 +63,4 @@ def deleteproduc(produc_name):
     return jsonify({"message": "no encontrado"})
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=4000)
+    app.run(host='127.0.0.1', port=4000, debug=True)

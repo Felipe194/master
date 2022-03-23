@@ -1,0 +1,7 @@
+string
+flask import Flask
+jsonify
+request
+render_template
+url_for
+productos

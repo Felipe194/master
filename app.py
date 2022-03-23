@@ -1,3 +1,9 @@
+#Integrantes GRUPO 3-B
+# • Felipe Rodríguez
+# • Cesar Triviño
+# • Nelson Acurio
+# • Richard Ramos
+
 import string
 from flask import Flask, jsonify, request,render_template,url_for
 from productos import productos
@@ -16,12 +22,25 @@ def lista():
 @app.route('/productos', methods=['GET'])
 def getProdu():
     return jsonify(productos)
+@app.route('/get_Productos', methods=['GET','POST'])
+def get_productos():
+    if request.method=='POST':
+        elemento=request.form.get("elemento")
+        listpro = [produc for produc in productos if produc['name'] == elemento.lower()]
+        print(listpro)
+        if (len(listpro) > 0):
+            lista=jsonify({"productos": listpro[0]})
+            #return render_template("Productos.html",lista=lista)
+            return jsonify({"productos": listpro[0]})
+        #return listpro
+    return "No existe ese producto"
+        
 
 @app.route('/productos/<string:produc_name>', methods=['GET'])
 def getProduc(produc_name):
     listpro = [produc for produc in productos if produc['name'] == produc_name.lower()]
     if (len(listpro) > 0):
-        return jsonify({"productos": listpro[0]})
+        return render_template(jsonify({"productos": listpro[0]}))
     return jsonify({"message": "producto no encontrado"})
 
 @app.route('/productos', methods=['POST'])
@@ -63,4 +82,4 @@ def deleteproduc(produc_name):
     return jsonify({"message": "no encontrado"})
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=4000, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)
